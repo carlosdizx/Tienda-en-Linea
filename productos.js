@@ -56,16 +56,19 @@ const PRODUCTOS = [
     path: "assets/imagenes/img_11.png",
   },
   {
-    id: 11,
+    id: 12,
     nombre: "Queso crema",
-    precio: 3000,
+    precio: 3700,
     path: "assets/imagenes/img_12.png",
   },
 ];
 
 const BOTONES = [];
 
-let comprados = 0 ;
+const COMPRADOS = [];
+
+let total = 0;
+totalTemplate = document.getElementById("total");
 
 for (let i = 0; i < PRODUCTOS.length; i++) {
   const producto = PRODUCTOS[i];
@@ -86,21 +89,16 @@ for (let i = 0; i < PRODUCTOS.length; i++) {
 }
 
 for (let i = 0; i < PRODUCTOS.length; i++) {
-  const btn = document.getElementById("btn-" + PRODUCTOS[i].id);
+  const btn = document.getElementById(`btn-${PRODUCTOS[i].id}`);
   BOTONES.push(btn);
 }
 
-const agregarCarrito = (id) => {
-  comprados ++;
-};
+const buscarProducto = (id) => PRODUCTOS[id];
+BOTONES.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    COMPRADOS.push(buscarProducto(index));
+    totalTemplate.textContent = "Cantidad comprados: "+COMPRADOS.length;
+  });
+});
 
-for (let i = 0; i < BOTONES.length; i++) {
-  const btn = BOTONES[i];
-  const evento = btn.addEventListener("click" + i, agregarCarrito(i));
-}
-
-/**
-
-
-agregarEventos();
-*/
+for (let i = 0; i < PRODUCTOS.length; i++) {}
