@@ -5,7 +5,12 @@ const PRODUCTOS = [
     precio: 3000,
     path: "assets/imagenes/img_1.png",
   },
-  { id: 2, nombre: "Azucar", precio: 3000, path: "assets/imagenes/img_2.png" },
+  {
+    id: 2,
+    nombre: "Azucar Alkosto",
+    precio: 3200,
+    path: "assets/imagenes/img_2.png",
+  },
   {
     id: 3,
     nombre: "Sal del Himalaya",
@@ -113,9 +118,10 @@ const descripcionDeCompra = () => {
 const buscarProducto = (id) => PRODUCTOS[id];
 BOTONES.forEach((btn, index) => {
   btn.addEventListener("click", () => {
-    COMPRADOS.push(buscarProducto(index));
+    const producto = buscarProducto(index);
+    COMPRADOS.push(producto);
+    alert("Agrego al carrito " + producto.nombre);
     calcularSubTotal();
-    descripcionDeCompra();
     cantidad.textContent = "Cantidad comprados: " + COMPRADOS.length;
   });
 });
