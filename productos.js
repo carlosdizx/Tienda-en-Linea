@@ -67,8 +67,9 @@ const BOTONES = [];
 
 const COMPRADOS = [];
 
-let total = 0;
-totalTemplate = document.getElementById("total");
+cantidad = document.getElementById("cantidad");
+subtotal = document.getElementById("subtotal");
+descripcion = document.getElementById("descripcion");
 
 for (let i = 0; i < PRODUCTOS.length; i++) {
   const producto = PRODUCTOS[i];
@@ -93,11 +94,29 @@ for (let i = 0; i < PRODUCTOS.length; i++) {
   BOTONES.push(btn);
 }
 
+const calcularSubTotal = () => {
+  let total = 0;
+  COMPRADOS.forEach((comprado) => {
+    total += comprado.precio;
+  });
+  subtotal.textContent = "Subtotal $" + total;
+};
+
+const descripcionDeCompra = () => {
+  let msg = "Descripcion: ";
+  COMPRADOS.forEach((comprado) => {
+    msg += comprado.nombre + "-";
+  });
+  descripcion.textContent = msg;
+};
+
 const buscarProducto = (id) => PRODUCTOS[id];
 BOTONES.forEach((btn, index) => {
   btn.addEventListener("click", () => {
     COMPRADOS.push(buscarProducto(index));
-    totalTemplate.textContent = "Cantidad comprados: "+COMPRADOS.length;
+    calcularSubTotal();
+    descripcionDeCompra();
+    cantidad.textContent = "Cantidad comprados: " + COMPRADOS.length;
   });
 });
 
