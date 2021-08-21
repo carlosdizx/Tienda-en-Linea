@@ -63,6 +63,10 @@ const PRODUCTOS = [
   },
 ];
 
+const BOTONES = [];
+
+let comprados = 0 ;
+
 for (let i = 0; i < PRODUCTOS.length; i++) {
   const producto = PRODUCTOS[i];
   document.write(`<div class="col-sm-6 card">
@@ -81,9 +85,22 @@ for (let i = 0; i < PRODUCTOS.length; i++) {
                   </div>`);
 }
 
-const agregar = () => {
-  for (let i = 0; i < PRODUCTOS.length; i++) {
-    const producto = PRODUCTOS[i];
-    document.getElementById("btn-" + producto.id);
-  }
+for (let i = 0; i < PRODUCTOS.length; i++) {
+  const btn = document.getElementById("btn-" + PRODUCTOS[i].id);
+  BOTONES.push(btn);
+}
+
+const agregarCarrito = (id) => {
+  comprados ++;
 };
+
+for (let i = 0; i < BOTONES.length; i++) {
+  const btn = BOTONES[i];
+  const evento = btn.addEventListener("click" + i, agregarCarrito(i));
+}
+
+/**
+
+
+agregarEventos();
+*/
