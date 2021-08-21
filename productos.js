@@ -71,9 +71,11 @@ const PRODUCTOS = [
 const BOTONES = [];
 
 const COMPRADOS = [];
+let total = 0;
 
 cantidad = document.getElementById("cantidad");
 subtotal = document.getElementById("subtotal");
+final = document.getElementById("total");
 descripcion = document.getElementById("descripcion");
 
 for (let i = 0; i < PRODUCTOS.length; i++) {
@@ -115,28 +117,41 @@ BOTONES.forEach((btn, index) => {
     alert("Agrego al carrito " + producto.nombre);
     calcularSubTotal();
     contarProductos();
-    cantidad.textContent = "Cantidad comprados: " + COMPRADOS.length;
+    cantidad.textContent = "Cantidad: " + COMPRADOS.length;
   });
 });
 
 contarProductos = () => {
+  total = 0;
   let msg = "Descripcion: ";
   const conteo = [];
   for (let i = 0; i < COMPRADOS.length; i++) {
+    const c = COMPRADOS[i];
     if (conteo[COMPRADOS[i].id]) {
       conteo[COMPRADOS[i].id].cantidad++;
     } else {
-      conteo[COMPRADOS[i].id] = { cantidad: 1, producto: COMPRADOS[i].nombre };
+      conteo[COMPRADOS[i].id] = {
+        cantidad: 1,
+        producto: c.nombre,
+        precio: c.precio,
+      };
     }
   }
   conteo.forEach((c, index) => {
-   if (index === conteo.length -1 ){
-     msg +=
-         c.cantidad + "..." + c.producto;
-   }else{
-     msg +=
-         c.cantidad + "..." + c.producto+"--";
-   }
+    let subtotal = 0;
+
+    if (c.cantidad >= 10) {
+      subtotal = c.precio * c.cantidad * 0.9;
+    } else {
+      subtotal = c.precio * c.cantidad;
+    }
+    if (index === conteo.length - 1) {
+      msg += c.cantidad + "..." + c.producto + "..." + subtotal;
+    } else {
+      msg += c.cantidad + "..." + c.producto + "..." + subtotal + "--";
+    }
+    total += subtotal;
+    final.textContent = "Total $" + total;
   });
   descripcion.textContent = msg;
 };
