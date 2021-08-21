@@ -107,14 +107,6 @@ const calcularSubTotal = () => {
   subtotal.textContent = "Subtotal $" + total;
 };
 
-const descripcionDeCompra = () => {
-  let msg = "Descripcion: ";
-  COMPRADOS.forEach((comprado) => {
-    msg += comprado.nombre + "-";
-  });
-  descripcion.textContent = msg;
-};
-
 const buscarProducto = (id) => PRODUCTOS[id];
 BOTONES.forEach((btn, index) => {
   btn.addEventListener("click", () => {
@@ -122,8 +114,29 @@ BOTONES.forEach((btn, index) => {
     COMPRADOS.push(producto);
     alert("Agrego al carrito " + producto.nombre);
     calcularSubTotal();
+    contarProductos();
     cantidad.textContent = "Cantidad comprados: " + COMPRADOS.length;
   });
 });
 
-for (let i = 0; i < PRODUCTOS.length; i++) {}
+contarProductos = () => {
+  let msg = "Descripcion: ";
+  const conteo = [];
+  for (let i = 0; i < COMPRADOS.length; i++) {
+    if (conteo[COMPRADOS[i].id]) {
+      conteo[COMPRADOS[i].id].cantidad++;
+    } else {
+      conteo[COMPRADOS[i].id] = { cantidad: 1, producto: COMPRADOS[i].nombre };
+    }
+  }
+  conteo.forEach((c, index) => {
+   if (index === conteo.length -1 ){
+     msg +=
+         c.cantidad + "..." + c.producto;
+   }else{
+     msg +=
+         c.cantidad + "..." + c.producto+"--";
+   }
+  });
+  descripcion.textContent = msg;
+};
