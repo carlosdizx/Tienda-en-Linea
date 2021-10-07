@@ -77,7 +77,7 @@ const servidor = (request, response) => {
   PRODUCTOS.forEach(producto => {
       console.log(producto)
   });
-  response.write("xd");
+  response.write("");
   response.end();
 };
 http.createServer(servidor).listen(3000);
