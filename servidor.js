@@ -1,7 +1,6 @@
 "use strict";
 const http = require("http");
 const fs = require("fs");
-const path = require("path");
 
 const PRODUCTOS = [
   {
@@ -77,12 +76,15 @@ const PRODUCTOS = [
     path: "https://jumbocolombiafood.vteximg.com.br/arquivos/ids/198588-1000-1000/7702434701746.jpg?v=636250315216970000",
   },
 ];
+const BOTONES = [];
+const COMPRADOS = [];
 
-const servidor = (request, response) => {
+const crearHTML = (request, response) => {
   let textoHTML = "";
   fs.readFile("./plantilla.html", (error, texto) => {
     textoHTML = texto.toString();
     let textoProductos = "";
+
     PRODUCTOS.forEach((producto) => {
       textoProductos += `<div class="col-sm-6 card">
                   <img src="${
@@ -96,8 +98,14 @@ const servidor = (request, response) => {
                       </div>
                       <button class="btn btn-primary" id="btn-${
                         producto.id
-                      }">Agregar</button>
+                      }"
+                      >Agregar</button>
                   </div>`;
+    });
+    BOTONES.forEach((btn, index) => {
+      btn.addEventListener("click", () => {
+        alert("Click " + index);
+      });
     });
     textoHTML = textoHTML.replace("{productos}", textoProductos);
     response.writeHead(200, { "Content-type": "text/html; utf-8" });
@@ -105,4 +113,5 @@ const servidor = (request, response) => {
     response.end();
   });
 };
-http.createServer(servidor).listen(3000);
+
+http.createServer(crearHTML).listen(3000);
