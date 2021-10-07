@@ -96,10 +96,7 @@ const crearHTML = (request, response) => {
                       <div class="card-body">
                         <h4>${[producto.nombre]}</h4>
                       </div>
-                      <button class="btn btn-primary" id="btn-${
-                        producto.id
-                      }"
-                      >Agregar</button>
+                      <input type="text" class="form-control" placeholder="Ingrese la cantidad" name="${producto.nombre}">
                   </div>`;
     });
     BOTONES.forEach((btn, index) => {
