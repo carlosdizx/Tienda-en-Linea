@@ -1,19 +1,20 @@
 "use strict";
 const http = require("http");
 const fs = require("fs");
+const path = require("path");
 
 const PRODUCTOS = [
   {
     id: 1,
     nombre: "Arroz Blanco",
     precio: 3000,
-    path: "assets/imagenes/img_1.png",
+    path: "./assets/imagenes/img_1.png",
   },
   {
     id: 2,
     nombre: "Azucar Alkosto",
     precio: 3200,
-    path: "assets/imagenes/img_2.png",
+    path: "./assets/imagenes/img_2.png",
   },
   {
     id: 3,
@@ -73,11 +74,32 @@ const PRODUCTOS = [
 ];
 
 const servidor = (request, response) => {
-  response.writeHead(200, { "Content-type": "text/html; utf-8" });
-  PRODUCTOS.forEach(producto => {
-      console.log(producto)
+  let textoHTML = "";
+  fs.readFile("./plantilla.html", (error, texto) => {
+    textoHTML = texto.toString();
+    let textoProductos = "";
+    PRODUCTOS.forEach((producto) => {
+      textoProductos += `<div class="col-sm-6 card">
+                  <img src="${path.resolve(
+                    __dirname,
+                    "assets/imagenes/img.png"
+                  )}" width="450" height="450" class="card-img-top" />
+                      <div class="card-footer">
+                        precio ${producto.precio}
+                      </div>
+                      <div class="card-body">
+                        <h4>${[producto.nombre]}</h4>
+                      </div>
+                      <button class="btn btn-primary" id="btn-${
+                        producto.id
+                      }">Agregar</button>
+                  </div>`;
+    });
+    textoHTML = textoHTML.replace("{productos}", textoProductos);
+    response.writeHead(200, { "Content-type": "text/html; utf-8" });
+    response.write(textoHTML);
+    console.log(textoHTML);
+    response.end();
   });
-  response.write("");
-  response.end();
 };
 http.createServer(servidor).listen(3000);
