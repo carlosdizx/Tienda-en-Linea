@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "prettier": "^2.3.2",
-    "sweetalert2": "^11.1.4"
+    "prettier": "^2.4.1"
   }
 }
