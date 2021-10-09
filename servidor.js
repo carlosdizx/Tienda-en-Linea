@@ -33,8 +33,12 @@ http
         }
         const textoHTML = texto
           .toString()
-          .replace("{cantidad}", "Cantidad: "+cantidad.toString())
-          .replace("{subtotal}", "Subtotal: "+subtotal.toString())
+          .replace("{cantidad}", "Cantidad: " + cantidad.toString())
+          .replace("{subtotal}", "Subtotal: " + subtotal.toString())
+          .replace(
+            "{descuento}",
+            existeDescuento ? "Descuento aplicado" : "No hay descuento"
+          )
           .replace("{total}", "Total: " + total.toString());
 
         response.writeHead(200, { "Content-Type": "text/html;" });
